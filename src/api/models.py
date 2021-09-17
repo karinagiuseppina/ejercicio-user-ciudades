@@ -34,7 +34,7 @@ class Country(db.Model):
     cities = db.relationship('City', backref='country', lazy=True)
 
     def __repr__(self):
-        return '<Country %r>' % self.name
+        return '<Country %r>' % self.id
 
     def serialize(self):
         return {
@@ -51,7 +51,7 @@ class City(db.Model):
         nullable=False)
 
     def __repr__(self):
-        return '<City %r>' % self.name
+        return '<City %r>' % self.id 
 
     def serialize(self):
         return {

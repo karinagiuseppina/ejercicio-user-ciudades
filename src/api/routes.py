@@ -49,17 +49,20 @@ def create_user():
 
     new_city = City.query.filter_by(name=city).first()
     new_country = Country.query.filter_by(name=country).first()
+    print(new_city, new_country)
     if new_city is None:
-        new_city = City(name = city)
-        db.session.add(new_city)   
+        new_city = City(name = city) 
+        print(new_city, new_country)
         if new_country is None:
             new_country = Country(name = country)
-            db.session.add(new_country)
         new_country.cities.append(new_city)
+        print(new_city, new_country)
 
+    print(new_city, new_country)
     new_country.users.append(user)
     new_city.users.append(user)   
-    
+    db.session.add(new_city)
+    db.session.add(new_country)
     db.session.add(user)
     db.session.commit()
 
