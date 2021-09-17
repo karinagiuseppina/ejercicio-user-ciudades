@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.scss";
 import { Link } from "react-router-dom";
 
@@ -10,23 +9,8 @@ export const Userdata = () => {
 	return (
 		<div className="text-center mt-5">
 			<h1>HelloUser</h1>
-			<div className="alert alert-info">{store.user_token || "Cargando token"}</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://github.com/4GeeksAcademy/react-flask-hello/tree/95e0540bd1422249c3004f149825285118594325/docs">
-					Read documentation
-				</a>
-			</p>
-			<button type="button" className="btn btn-primary m-1">
-				<Link to="/login" className="text-white">
-					Login
-				</Link>
-			</button>
-			<button type="button" className="btn btn-primary m-1">
-				<Link to="/signup" className="text-white">
-					Signup
-				</Link>
-			</button>
+			<div className="alert alert-info">{localStorage.getItem("user")}</div>
+			<Link to="/">Go Home </Link>
 		</div>
 	);
 };
