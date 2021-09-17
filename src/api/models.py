@@ -9,8 +9,6 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    country_id = db.Column(db.Integer, db.ForeignKey('country.id'),
-        nullable=False)
     city_id = db.Column(db.Integer, db.ForeignKey('city.id'),
         nullable=False)
 
@@ -22,7 +20,6 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "name": self.name,
-            "country": self.country_id,
             "city": self.city_id
             # do not serialize the password, its a security breach
         }
@@ -30,7 +27,6 @@ class User(db.Model):
 class Country(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
-    users = db.relationship('User', backref='country', lazy=True)
     cities = db.relationship('City', backref='country', lazy=True)
 
     def __repr__(self):

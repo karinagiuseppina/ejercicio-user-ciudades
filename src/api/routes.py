@@ -42,7 +42,7 @@ def create_user():
     is_active = request.json.get("is_active", None)
 
     # Query your database for username and password
-    if email is None or password is None or is_active is None:
+    if email is None or password is None:
         return jsonify({"msg": "Bad username or password"}), 401
     
     user = User(email=email, name=name, password = password, is_active= is_active)
@@ -59,7 +59,6 @@ def create_user():
         print(new_city, new_country)
 
     print(new_city, new_country)
-    new_country.users.append(user)
     new_city.users.append(user)   
     db.session.add(new_city)
     db.session.add(new_country)
@@ -85,6 +84,13 @@ def get_countries():
     
     return jsonify(countries), 200
 
+@api.route('/users', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    users = list(map (lambda user: user.serialize(), users))
+    
+    return jsonify(users), 200
+
 @api.route('/cities', methods=['GET'])
 def get_cities():
     cities = City.query.all()
@@ -98,9 +104,9 @@ def get_country(country_id):
 
     return jsonify(country.serialize()), 200
 
-@api.route('/countries/<country_id>/cities', methods=['GET'])
-def get_country_cities(country_id):
-    country = Country.query.filter_by(id=country_id).first()
+@api.route('/countries/<country_name>/cities', methods=['GET'])
+def get_country_cities(country_name):
+    country = Country.query.filter_by(name=country_name).first()
 
     cities = country.cities
     cities = list(map (lambda city: city.serialize(), cities))
